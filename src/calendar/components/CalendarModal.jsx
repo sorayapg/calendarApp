@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { addHours, differenceInSeconds } from 'date-fns';
 
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
 import Modal from 'react-modal';
 import DatePicker, { registerLocale} from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -61,7 +64,7 @@ export const CalendarModal = () => {
     console.log({ difference} );
 
     if ( isNaN( difference) || difference <= 0 ){
-      console.log("la fecha de fin no puede ser menor a la de inicio");
+      Swal.fire('Fechas incorrectas','Revisar las fechas ingresadas', 'error');
       return;
     }
 
