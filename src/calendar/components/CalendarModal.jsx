@@ -1,9 +1,12 @@
 import { useState } from 'react';
-import { addHours } from 'date-fns';
+import { addHours, differenceInSeconds } from 'date-fns';
 
 import Modal from 'react-modal';
-import DatePicker from 'react-datepicker';
+import DatePicker, { registerLocale} from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { es } from 'date-fns/locale/es';
+
+registerLocale('es', es );
 
 const customStyles = {
   content: {
@@ -50,6 +53,28 @@ export const CalendarModal = () => {
     setIsOpen(false);
   };
 
+
+  const onSubmit = ( event ) => {
+    event.preventDefault();
+
+    const difference = differenceInSeconds( formValues.end, formValues.start );
+    console.log({ difference} );
+
+    if ( isNaN( difference) || difference <= 0 ){
+      console.log("la fecha de fin no puede ser menor a la de inicio");
+      return;
+    }
+
+    if ( formValues.title.length <= 0 ) return;
+    
+    console.log( formValues );
+
+    // TODO:
+    // Remover errores en pantalla
+    // cerrar modal
+  }
+
+
   return (
     <Modal
       isOpen={isOpen}
@@ -61,7 +86,7 @@ export const CalendarModal = () => {
     >
       <h1> Nuevo evento </h1>
       <hr />
-      <form className="container">
+      <form className="container" onSubmit={ onSubmit}>
         <div className="form-group mb-2">
           <label>Fecha y hora inicio</label>
           <DatePicker 
@@ -69,6 +94,9 @@ export const CalendarModal = () => {
             onChange={ (event) => onDateChanged(event, 'start')}
             className="form-control"
             dateFormat="Pp"
+            showTimeSelect
+            locale="es"
+            timeCaption="Hora"
           />
         </div>
 
@@ -80,6 +108,9 @@ export const CalendarModal = () => {
             onChange={ (event) => onDateChanged(event, 'end')}
             className="form-control"
             dateFormat="Pp"
+            showTimeSelect
+            locale="es"
+            timeCaption="Hora"
           />
         </div>
 
