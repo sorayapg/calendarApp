@@ -1,9 +1,13 @@
 // src/hooks/useCalendarForm.js
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { addHours, differenceInSeconds } from 'date-fns';
 import Swal from 'sweetalert2';
+import { useCalendarStore } from '../../hooks';
 
 export const useCalendarForm = (initialForm = {}) => {
+
+  const { activeEvent } = useCalendarStore();
+
   const [formValues, setFormValues] = useState({
     title: '',
     notes: '',
@@ -18,6 +22,17 @@ export const useCalendarForm = (initialForm = {}) => {
     if (!formSubmitted) return '';
     return formValues.title.length > 0 ? 'is-valid' : 'is-invalid';
   }, [formValues.title, formSubmitted]);
+
+
+
+  useEffect(() => {
+    if ( activeEvent !== null ) {
+      setFormValues({ ...activeEvent });
+    }
+  
+    
+  }, [ activeEvent ])
+  
 
   const onInputChanged = ({ target }) => {
     setFormValues({ ...formValues, [target.name]: target.value });

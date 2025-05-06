@@ -3,6 +3,7 @@ import { addHours } from 'date-fns';// importacion temporal que se acabara borra
 
 // crearemos aqui el evento temporalmente 
 const tempEvent = {
+    _id: new Date().getTime(),
     title: 'Cumpleaños de Diego',
     notes: 'Organizar el cumple',
     start: new Date(),
@@ -23,16 +24,15 @@ export const calendarSlice = createSlice({
         activeEvent: null,
     },
 
-    //TODO : cargar los reducers en el slice
-    //TODO : crear los reducers para el slice
+    
     
     reducers: {
-        increment: (state, /* action */ ) => {
-            state.counter += 1;
-        },
+        onSetActiveEvent: ( state, { payload }) => {
+            state.activeEvent = payload;
+        }
     }
 });
 
 
 // Action creators are generated for each case reducer function
-export const { increment } = calendarSlice.actions;
+export const { onSetActiveEvent } = calendarSlice.actions;
