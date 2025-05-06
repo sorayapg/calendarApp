@@ -29,8 +29,8 @@ export const CalendarModal = () => {
     onDateChanged,
     validateForm,
   } = useCalendarForm({
-    title: 'Soraya',
-    notes: 'Povedano',
+    title: '',
+    notes: '',
   });
 
   const onCloseModal = () => {
