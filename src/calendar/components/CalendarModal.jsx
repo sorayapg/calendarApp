@@ -34,15 +34,15 @@ export const CalendarModal = () => {
   });
 
   const onCloseModal = () => {
-    //console.log( 'cerrando el modal');
+    
     closeDateModal();
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
-    if (!validateForm()) return;
-    //console.log(formValues);
-    // TODO: cerrar modal, limpiar, guardar en backend...
+    //if (!validateForm()) return;
+    await validateForm();
+    
   };
 
   return (

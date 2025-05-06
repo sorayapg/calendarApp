@@ -2,11 +2,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { addHours, differenceInSeconds } from 'date-fns';
 import Swal from 'sweetalert2';
-import { useCalendarStore } from '../../hooks';
+import { useCalendarStore, useUiStore } from '../../hooks';
 
 export const useCalendarForm = (initialForm = {}) => {
 
-  const { activeEvent } = useCalendarStore();
+  const { activeEvent, startSavingEvent } = useCalendarStore();
+  const { closeDateModal } = useUiStore();
 
   const [formValues, setFormValues] = useState({
     title: '',
@@ -42,7 +43,7 @@ export const useCalendarForm = (initialForm = {}) => {
     setFormValues({ ...formValues, [type]: date });
   };
 
-  const validateForm = () => {
+  const validateForm = async () => {
     setFormSubmitted(true);
     const diff = differenceInSeconds(formValues.end, formValues.start);
     if (isNaN(diff) || diff <= 0) {
@@ -51,15 +52,21 @@ export const useCalendarForm = (initialForm = {}) => {
     }
 
     if (formValues.title.length <= 0) return false;
-
+    
+    await startSavingEvent( formValues);
+    closeDateModal();
+    setFormSubmitted(false);
     return true;
+    
   };
 
+  
   return {
     formValues,
     titleClass,
     onInputChanged,
     onDateChanged,
     validateForm,
+    
   };
 };
