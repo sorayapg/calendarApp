@@ -1,6 +1,8 @@
 
-import { useForm } from '../../hooks';
+import { useEffect } from 'react';
+import { useAuthStore, useForm } from '../../hooks';
 import './loginPage.css';
+import Swal from 'sweetalert2';
 
 // creamos dos objetos para los campos del formulario de logfin y registro
 const loginFormFields = {
@@ -16,6 +18,10 @@ const registerFormFields = {
 }
 
 export const LoginPage = () => {
+    // usamos el hook useAuthStore para manejar el estado de la autenticación y el error si lo hay
+    const { starLogin, errorMessage } = useAuthStore();
+
+
     // usamos el hook useForm para manejar los campos del formulario tanto de login 
     const {loginEmail, loginPassword, onInputChange:onLoginInputChange, } = useForm( loginFormFields );
     
@@ -25,8 +31,9 @@ export const LoginPage = () => {
     const loginSubmit = ( event ) => {
         event.preventDefault();
 
-        // Aquí puedes manejar el envío del formulario de login
-        console.log('Login form submitted', { loginEmail, loginPassword });
+        // Aquí manejamos el envío del formulario de login
+       starLogin({email: loginEmail, password: loginPassword });
+        
     }
 
     const registerSubmit = ( event ) => {
@@ -36,6 +43,14 @@ export const LoginPage = () => {
         console.log( { registerName, registerEmail, registerPassword, registerPassword2,})
     }
 
+    useEffect(() => {
+      // si hay un error , mostraremos el mensaje con sweetalert2, solo si hay un mensaje de error
+      if ( errorMessage !== undefined) {
+        Swal.fire(' Error en la autenticación ', errorMessage, 'error');
+      }
+    
+    }, [errorMessage])
+    
 
 
     return (
