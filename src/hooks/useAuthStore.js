@@ -2,43 +2,81 @@ import { useDispatch, useSelector } from 'react-redux';
 import { calendarApi } from '../api';
 import { clearErrorMessage, onChecking, onLogaut, onLogin } from '../store';
 
-
+/**
+ * Hook de autenticación para la aplicación de calendario
+ */
 export const useAuthStore = () => {
 
-    const { status, user, errorMessage, } = useSelector( state => state.auth ); // desectructuramos lo que nos interesa del estado de auth
-    const dispatch = useDispatch()
+    // -------------------- State & helpers --------------------
+    const { status, user, errorMessage } = useSelector(state => state.auth);
+    const dispatch = useDispatch();
 
-    const starLogin = async({ email, password }) => {
-        // actualizamos el estado a 'checking' antes de hacer la petición
-        dispatch( onChecking() );
+    // -------------------- Login --------------------
+
+    const startLogin = async({ email, password }) => {
+        dispatch(onChecking());
+
         try {
-            // nos conectamos a la API para autenticar al usuario
-            const { data } = await calendarApi.post('/auth',{ email, password });
-            // si la petición es exitosa, actualizamos el estado con los datos del usuario
-            localStorage.setItem('tocken', data.tocken );
-            localStorage.setItem('tocken-init-date', new Date().getTime() );
-            // actualizamos el estado a 'authenticated' con los datos del usuario
-            dispatch( onLogin( { name: data.name, uid: data.uid }));
+            const { data } = await calendarApi.post('/auth', { email, password });
+
+            localStorage.setItem('token', data.token); // corregir 'tocken' a 'token'
+            localStorage.setItem('token-init-date', new Date().getTime());
+
+            dispatch(onLogin({ name: data.name, uid: data.uid }));
 
         } catch (error) {
-            // si ocurre un error, lo capturamos y le mostramos el mensaje de error 
-            dispatch( onLogaut('Credenciales incorrectas'));
+            dispatch(onLogaut('Credenciales incorrectas'));
             setTimeout(() => {
-                dispatch( clearErrorMessage() );
-            }, 10); // con esto limpiamos el mensaje de error después de 10ms
+                dispatch(clearErrorMessage());
+            }, 10);
         }
-    }
+    };
 
+    // -------------------- Register --------------------
 
+    const startRegister = async({ name, email, password }) => {
+        dispatch(onChecking());
 
+        
+
+        try {
+            const { data } = await calendarApi.post('/auth/new', {
+                name: name,
+                email: email,
+                password: password
+            });
+
+            localStorage.setItem('token', data.token); // corregir 'tocken' a 'token'
+            localStorage.setItem('token_init_date', new Date().getTime());
+
+            dispatch(onLogin({ name: data.name, uid: data.uid }));
+
+        } catch (error) {
+            let errorMsg = 'Error desconocido';
+
+            if (error.response?.data?.msg) {
+                errorMsg = error.response.data.msg;
+            } else if (error.response?.data?.errors) {
+                const validationErrors = error.response.data.errors;
+                const firstKey = Object.keys(validationErrors)[0];
+                errorMsg = validationErrors[firstKey].msg;
+            }
+
+            dispatch(onLogaut(errorMsg));
+
+            setTimeout(() => {
+                dispatch(clearErrorMessage());
+            }, 10);
+        }
+    };
+
+    // -------------------- Return --------------------
 
     return {
-        //* Properties
         errorMessage,
-        status, 
-        user, 
-
-        //* Methods 
-        starLogin,
-    }
-}
+        status,
+        user,
+        startLogin,
+        startRegister,
+    };
+};

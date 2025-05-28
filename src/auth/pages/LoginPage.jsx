@@ -19,7 +19,7 @@ const registerFormFields = {
 
 export const LoginPage = () => {
     // usamos el hook useAuthStore para manejar el estado de la autenticación y el error si lo hay
-    const { starLogin, errorMessage } = useAuthStore();
+    const { starLogin, errorMessage, startRegister } = useAuthStore();
 
 
     // usamos el hook useForm para manejar los campos del formulario tanto de login 
@@ -40,7 +40,12 @@ export const LoginPage = () => {
         event.preventDefault();
 
         // Aqui puedes manejar el envío del formulario de registro
-        console.log( { registerName, registerEmail, registerPassword, registerPassword2,})
+        // Si las contraseñas no coinciden, mostramos con sweetalert2 un mensaje de error
+        if ( registerPassword !== registerPassword2 ){
+            Swal.fire('Error en el registro', 'Las contraseñas no coinciden', 'error' );
+            return;
+        }
+        startRegister( { name: registerName, email: registerEmail, password: registerPassword})
     }
 
     useEffect(() => {
