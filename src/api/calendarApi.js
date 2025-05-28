@@ -8,6 +8,16 @@ const calendarApi = axios.create({
     baseURL: VITE_API_URL, // Usamos la URL de la API desde las variables de entorno
 });
 
-// TODO: configurar interceptores
+// configurar interceptores
+
+calendarApi.interceptors.request.use( config => {
+
+    config.headers = {
+        ...config.headers,
+        'x-token': localStorage.getItem('token')
+    }
+
+    return config;
+})
 
 export default calendarApi;
