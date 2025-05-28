@@ -1,7 +1,7 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { calendarApi } from '../api';
 import { clearErrorMessage, onChecking, onLogaut, onLogin } from '../store';
-import { useEffect } from 'react';
+import { calendarApi } from '../api';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 /**
  * Hook personalizado para manejar la autenticación del usuario en la aplicación de calendario.
@@ -97,13 +97,17 @@ export const useAuthStore = () => {
 
 
     // -------------------- Renew Token (pendiente) --------------------
-    // Añadimos una nueva función para renovar el token automáticamente si es necesario.
+    // Creamos una nueva función para renovar el token automáticamente si es necesario.
     const checkAuthToken = async() => {
         const token = localStorage.getItem('token');
         if ( !token ) return dispatch(onLogaut()); // si no hay token, cerramos sesión
 
         try {
-            const { data } = await calendarApi.get('auth/renew');
+            // Incluimos el token en el header por si calendarApi no lo hace automáticamente
+            const { data } = await calendarApi.get('/auth/renew', {
+                headers: { 'x-token': token },
+            });
+            
             // Guardamos el nuevo token y la fecha de inicio en localStorage
             localStorage.setItem('token', data.token);
             localStorage.setItem('token_init_date', new Date().getTime());
@@ -122,6 +126,20 @@ export const useAuthStore = () => {
 
     }
 
+    // -------------------- Logout --------------------
+    /**
+     * Cierra la sesión del usuario.
+     * Limpia el token del localStorage y actualiza el estado de autenticación.
+     */
+
+    const startLogout = () => {
+        localStorage.clear(); // Limpiamos el localStorage
+        dispatch(onLogaut()); // Despachamos la acción de logout
+    }
+
+
+    
+
    
     
 
@@ -130,13 +148,15 @@ export const useAuthStore = () => {
 
     return {
         // Propiedades del estado
-        errorMessage,
         status,
         user,
+        errorMessage,
 
         // Métodos
         checkAuthToken,
         startLogin,
+        startLogout,
         startRegister,
+
     };
 };
