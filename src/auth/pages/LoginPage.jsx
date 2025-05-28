@@ -19,7 +19,7 @@ const registerFormFields = {
 
 export const LoginPage = () => {
     // usamos el hook useAuthStore para manejar el estado de la autenticación y el error si lo hay
-    const { starLogin, errorMessage, startRegister } = useAuthStore();
+    const { startLogin, errorMessage, startRegister } = useAuthStore();
 
 
     // usamos el hook useForm para manejar los campos del formulario tanto de login 
@@ -32,7 +32,7 @@ export const LoginPage = () => {
         event.preventDefault();
 
         // Aquí manejamos el envío del formulario de login
-       starLogin({email: loginEmail, password: loginPassword });
+       startLogin({email: loginEmail, password: loginPassword });
         
     }
 
