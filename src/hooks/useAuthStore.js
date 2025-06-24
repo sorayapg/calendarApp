@@ -26,27 +26,36 @@ export const useAuthStore = () => {
      * Si falla, despacha un error.
      */
     const startLogin = async({ email, password }) => {
-        dispatch(onChecking()); // Cambia el estado a "checking" (verificando credenciales)
+    dispatch(onChecking());
 
-        try {
-            // Llamada al backend para autenticar
-            const { data } = await calendarApi.post('/auth', { email, password });
+    try {
+        const { data } = await calendarApi.post('/auth', { email, password });
 
-            // Guardamos el token y la fecha de inicio en localStorage
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('token-init-date', new Date().getTime());
-
-            // Despachamos la acción de login con los datos del usuario
-            dispatch(onLogin({ name: data.name, uid: data.uid }));
-
-        } catch (error) {
-            // En caso de error, mostramos mensaje y limpiamos luego de un breve tiempo
-            dispatch(onLogaut('Credenciales incorrectas'));
-            setTimeout(() => {
-                dispatch(clearErrorMessage());
-            }, 10);
+        // Validamos que el backend haya enviado el token correctamente
+        if (!data?.token) {
+            throw new Error('Token no recibido del servidor');
         }
-    };
+
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('token-init-date', new Date().getTime());
+
+        dispatch(onLogin({
+            name: data.name,
+            uid: data.uid
+        }));
+
+    } catch (error) {
+        console.error('Error en login:', error);
+
+        const errorMsg = error.response?.data?.msg || 'Credenciales incorrectas';
+        dispatch(onLogaut(errorMsg));
+
+        setTimeout(() => {
+            dispatch(clearErrorMessage());
+        }, 10);
+    }
+};
+
 
 
     // -------------------- Register --------------------
@@ -69,7 +78,8 @@ export const useAuthStore = () => {
 
             // Guardamos el token y la fecha de inicio en localStorage
             localStorage.setItem('token', data.token);
-            localStorage.setItem('token_init_date', new Date().getTime());
+            localStorage.setItem('token-init-date', new Date().getTime());
+
 
             // Autenticamos al nuevo usuario
             dispatch(onLogin({ name: data.name, uid: data.uid }));
