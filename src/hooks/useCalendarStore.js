@@ -32,23 +32,33 @@ export const useCalendarStore = () => {
 
     // Crea o actualiza un evento en el backend
     const startSavingEvent = async( calendarEvent ) => {
-        try {
-            if ( calendarEvent.id ) {
-                // Actualizar evento existente
-                await calendarApi.put(`/events/${calendarEvent.id}`, calendarEvent);
-                dispatch( onUpdateEvent({ ...calendarEvent, user }));
-                return;
-            }
-
-            // Crear nuevo evento
-            const { data } = await calendarApi.post('/events', calendarEvent);
-            dispatch( onAddNewEvent({ ...calendarEvent, id: data.event.id, user }));
-
-        } catch (error) {
-            console.log(error);
-            Swal.fire('Error al guardar', error.response?.data?.msg || 'Error inesperado', 'error');
+    try {
+        if ( calendarEvent.id ) {
+            // Actualizar evento existente
+            await calendarApi.put(`/events/${calendarEvent.id}`, calendarEvent);
+            dispatch( onUpdateEvent({ ...calendarEvent, user }));
+            return;
         }
+
+        // Crear nuevo evento
+        const { data } = await calendarApi.post('/events', calendarEvent);
+
+        if (!data?.event?.id) {
+            throw new Error('Respuesta inesperada del servidor al crear el evento');
+        }
+
+        dispatch( onAddNewEvent({ 
+            ...calendarEvent, 
+            id: data.event.id, 
+            user 
+        }));
+
+    } catch (error) {
+        console.log(error);
+        Swal.fire('Error al guardar', error.response?.data?.msg || error.message || 'Error inesperado', 'error');
     }
+};
+
 
     // Eliminar evento activo del backend y del store
     const startDeletingEvent = async () => {
