@@ -120,7 +120,7 @@ export const useAuthStore = () => {
             
             // Guardamos el nuevo token y la fecha de inicio en localStorage
             localStorage.setItem('token', data.token);
-            localStorage.setItem('token_init_date', new Date().getTime());
+            localStorage.setItem('token-init-date', new Date().getTime());
 
             // Autenticamos al nuevo usuario
             dispatch(onLogin({ name: data.name, uid: data.uid }));
