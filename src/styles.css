@@ -60,3 +60,73 @@
   width: 50px;
   height: 50px;
 }
+
+/* === Dark mode — React Big Calendar (vista semanal) === */
+/* Scope: .rbc-time-view es exclusivo de week/day view, no afecta mes ni agenda */
+
+[data-bs-theme="dark"] .rbc-time-view {
+  background-color: #1e2127;
+  border-color: #3a3d44;
+}
+
+[data-bs-theme="dark"] .rbc-time-header,
+[data-bs-theme="dark"] .rbc-time-header-gutter {
+  background-color: #252830;
+  border-color: #3a3d44;
+}
+
+[data-bs-theme="dark"] .rbc-time-header-content {
+  border-color: #3a3d44;
+}
+
+/* Cabeceras de días (solo en time view para no afectar mes) */
+[data-bs-theme="dark"] .rbc-time-view .rbc-header {
+  background-color: #252830;
+  color: #c9cdd4;
+  border-color: #3a3d44;
+}
+
+/* Rejilla de contenido horario */
+[data-bs-theme="dark"] .rbc-time-content {
+  background-color: #1e2127;
+  border-top-color: #3a3d44;
+}
+
+/* Grupos de slots — separadores horizontales suavizados */
+[data-bs-theme="dark"] .rbc-timeslot-group {
+  border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+
+/* Columna de horas (gutter izquierdo) */
+[data-bs-theme="dark"] .rbc-time-column {
+  background-color: #252830;
+}
+
+[data-bs-theme="dark"] .rbc-label {
+  color: #7d8590;
+}
+
+/* Columnas de cada día */
+[data-bs-theme="dark"] .rbc-day-slot {
+  background-color: #1e2127;
+}
+
+/* Líneas internas de cada slot de día — muy sutiles */
+[data-bs-theme="dark"] .rbc-day-slot .rbc-time-slot {
+  border-top-color: rgba(255, 255, 255, 0.04);
+}
+
+/* Separadores verticales entre días */
+[data-bs-theme="dark"] .rbc-day-slot + .rbc-day-slot {
+  border-left-color: #3a3d44;
+}
+
+/* Resaltado del día actual — teal muy suave, alineado con color de eventos */
+[data-bs-theme="dark"] .rbc-time-view .rbc-today {
+  background-color: rgba(52, 208, 247, 0.06);
+}
+
+/* Línea de hora actual */
+[data-bs-theme="dark"] .rbc-current-time-indicator {
+  background-color: #34d0f7;
+}
