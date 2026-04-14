@@ -79,9 +79,15 @@ VITE_API_URL=http://localhost:4000/api
 Para producción, usa .env.production o define VITE_API_URL como variable en la plataforma de despliegue:
 
 ```
-VITE_API_URL=https://calendar-app-backend-pro.up.railway.app/api
+VITE_API_URL=https://sorayapg.github.io/auth/login
 
 ```
+# ⚙️ 4. Configuración para GitHub Pages
+
+El proyecto utiliza la propiedad `base` de Vite:
+
+```js
+base: '/calendarApp/'
 
 # 🧩 5. Instalación y ejecución en local
 
@@ -103,7 +109,7 @@ npm run preview
 
 # 🔌 6. Conexión con el backend
 
-Define VITE_API_URL apuntando al backend (local o Railway).
+Define VITE_API_URL apuntando al backend (local o render).
 
 Asegúrate de que el backend permite CORS desde http://localhost:5173 (en desarrollo) y tu dominio público (en producción).
 
@@ -229,7 +235,33 @@ src/
 
 ```
 
-# 👩‍💻 13. Autora
+# 🌍 13. Entorno de producción
+
+## Frontend
+
+Aplicación desplegada en GitHub Pages:
+
+https://sorayapg.github.io/calendarApp/
+
+## Backend
+
+API desplegada en Render:
+
+https://calendarapp-backend-fes0.onrender.com/api
+
+## Notas importantes
+
+- La aplicación es una SPA (Single Page Application).
+- GitHub Pages puede devolver error 404 si se accede directamente a rutas internas como `/auth/login`.
+- La entrada correcta es siempre la raíz:
+
+https://sorayapg.github.io/calendarApp/
+
+- El backend en Render puede tardar unos segundos en responder si está en reposo (plan gratuito).
+
+# 👩‍💻 14. Autora
 
 Soraya Povedano Gallardo
-Frontend de CalendarApp — Proyecto DAW 2025
+Frontend de CalendarApp — Proyecto DAW 2025-2026
+
+# Actualizacion 
