@@ -61,6 +61,31 @@
   height: 50px;
 }
 
+/* === Dark mode — React Big Calendar (toolbar de navegación) === */
+
+[data-bs-theme="dark"] .rbc-toolbar button {
+  color: #c9cdd4;
+  border-color: #4a4d55;
+  background-color: #2c2f36;
+}
+
+[data-bs-theme="dark"] .rbc-toolbar button:hover {
+  color: #ffffff;
+  background-color: #3a3d44;
+  border-color: #5a5d65;
+}
+
+[data-bs-theme="dark"] .rbc-toolbar button.rbc-active {
+  color: #ffffff;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+[data-bs-theme="dark"] .rbc-toolbar button.rbc-active:hover {
+  background-color: #0b5ed7;
+  border-color: #0b5ed7;
+}
+
 /* === Dark mode — React Big Calendar (vista semanal) === */
 /* Scope: .rbc-time-view es exclusivo de week/day view, no afecta mes ni agenda */
 
