@@ -63,28 +63,34 @@
 
 /* === React Big Calendar — toolbar: botones de navegación (claro y oscuro) === */
 
-/* Separación entre los grupos de botones */
+/* Separación entre grupos */
 .rbc-toolbar .rbc-btn-group {
   display: flex;
   gap: 4px;
 }
 
 .rbc-toolbar .rbc-btn-group + .rbc-btn-group {
-  margin-left: 8px;
+  margin-left: 12px;
 }
 
-/* Estilo base de todos los botones — aplica en claro y oscuro */
+/* Estilo base — aplica en claro y oscuro */
 .rbc-toolbar button {
-  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.9rem;
   font-weight: 500;
   letter-spacing: 0.01em;
-  padding: 7px 16px;
+  padding: 7px 18px;
   border-radius: 8px;
   border: 1px solid transparent;
   cursor: pointer;
   line-height: 1.4;
-  transition: background-color 0.15s ease, color 0.15s ease,
-              border-color 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  transition: background-color 0.18s ease, color 0.18s ease,
+              border-color 0.18s ease, box-shadow 0.18s ease,
+              transform 0.12s ease;
 }
 
 .rbc-toolbar button:focus {
@@ -92,7 +98,26 @@
   box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
 }
 
-/* Modo claro — botones inactivos */
+.rbc-toolbar button:active {
+  transform: scale(0.95);
+  box-shadow: none;
+}
+
+/* Flechas ‹ › — botón cuadrado, fondo ligeramente distinto */
+.rbc-nav-arrows button {
+  padding: 7px 10px;
+  min-width: 38px;
+  background-color: #e9ecef;
+  border-color: #ced4da;
+}
+
+.rbc-nav-arrows button:hover {
+  background-color: #d3d8de;
+  border-color: #adb5bd;
+}
+
+/* ——— Modo claro ——— */
+
 .rbc-toolbar button {
   color: #343a40;
   background-color: #f1f3f5;
@@ -101,25 +126,45 @@
 
 .rbc-toolbar button:hover {
   color: #212529;
-  background-color: #e2e6ea;
-  border-color: #b8bfc7;
+  background-color: #dee2e6;
+  border-color: #adb5bd;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
 }
 
-/* Modo claro — botón de vista activo */
+/* "Hoy" — outlined azul, más protagonismo visual */
+.rbc-btn-group:first-child button:first-child {
+  color: #0d6efd;
+  background-color: rgba(13, 110, 253, 0.04);
+  border-color: #0d6efd;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(13, 110, 253, 0.12);
+}
+
+.rbc-btn-group:first-child button:first-child:hover {
+  color: #fff;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  box-shadow: 0 3px 10px rgba(13, 110, 253, 0.35);
+}
+
+/* Vista activa — relleno azul sólido */
 .rbc-toolbar button.rbc-active {
   color: #fff;
   background-color: #0d6efd;
   border-color: #0d6efd;
   font-weight: 600;
-  box-shadow: 0 2px 6px rgba(13, 110, 253, 0.35);
+  box-shadow: 0 2px 8px rgba(13, 110, 253, 0.4);
 }
 
 .rbc-toolbar button.rbc-active:hover {
   background-color: #0b5ed7;
   border-color: #0a58ca;
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.45);
+  transform: translateY(-1px);
 }
 
-/* === Dark mode — toolbar === */
+/* ——— Dark mode — toolbar ——— */
 
 [data-bs-theme="dark"] .rbc-toolbar button {
   color: #c9cdd4;
@@ -129,25 +174,57 @@
 
 [data-bs-theme="dark"] .rbc-toolbar button:hover {
   color: #ffffff;
-  background-color: #3a3d44;
+  background-color: #3d414a;
   border-color: #6c757d;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
 }
 
 [data-bs-theme="dark"] .rbc-toolbar button:focus {
   box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.35);
 }
 
+/* "Hoy" en dark — outlined con teal del calendario */
+[data-bs-theme="dark"] .rbc-btn-group:first-child button:first-child {
+  color: #34d0f7;
+  background-color: rgba(52, 208, 247, 0.06);
+  border-color: #34d0f7;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(52, 208, 247, 0.15);
+}
+
+[data-bs-theme="dark"] .rbc-btn-group:first-child button:first-child:hover {
+  color: #1e2127;
+  background-color: #34d0f7;
+  border-color: #34d0f7;
+  box-shadow: 0 3px 10px rgba(52, 208, 247, 0.35);
+}
+
+/* Flechas en dark — fondo ligeramente más destacado */
+[data-bs-theme="dark"] .rbc-nav-arrows button {
+  background-color: #353840;
+  border-color: #5a5d65;
+}
+
+[data-bs-theme="dark"] .rbc-nav-arrows button:hover {
+  background-color: #44474f;
+  border-color: #6c757d;
+}
+
+/* Vista activa en dark */
 [data-bs-theme="dark"] .rbc-toolbar button.rbc-active {
   color: #ffffff;
   background-color: #0d6efd;
   border-color: #0d6efd;
   font-weight: 600;
-  box-shadow: 0 2px 6px rgba(13, 110, 253, 0.4);
+  box-shadow: 0 2px 8px rgba(13, 110, 253, 0.45);
 }
 
 [data-bs-theme="dark"] .rbc-toolbar button.rbc-active:hover {
   background-color: #0b5ed7;
   border-color: #0a58ca;
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.5);
+  transform: translateY(-1px);
 }
 
 /* === Dark mode — React Big Calendar (vista semanal) === */
