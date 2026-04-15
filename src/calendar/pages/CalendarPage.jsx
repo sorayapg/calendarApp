@@ -6,7 +6,7 @@ import { Calendar } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css'; // Estilos del calendario
 
 // Componentes personalizados del proyecto
-import { CalendarEvent, CalendarModal, FabAddNew, FabDelete, Navbar } from '../';
+import { CalendarEvent, CalendarModal, CalendarToolbar, FabAddNew, FabDelete, Navbar } from '../';
 
 // Funciones helper
 import { localizer, getMessagesES } from '../../helpers';
@@ -85,7 +85,8 @@ export const CalendarPage = () => {
         messages={getMessagesES()} // Traducción de mensajes al español
         eventPropGetter={eventStyleGetter} // Estilo personalizado por evento
         components={{
-          event: CalendarEvent // Componente personalizado para mostrar eventos
+          event: CalendarEvent, // Componente personalizado para mostrar eventos
+          toolbar: CalendarToolbar, // Toolbar personalizado con iconos lucide
         }}
         onDoubleClickEvent={onDoubleClick} // Doble clic en evento
         onSelectEvent={onSelect} // Selección de evento
