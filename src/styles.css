@@ -39,6 +39,55 @@
   padding: 10px;
 }
 
+/* === Dark mode — Modal de evento === */
+[data-bs-theme="dark"] .modal {
+  background: #1e2430;
+  color: #f1f3f5;
+  border: 1px solid #3a3d44;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+[data-bs-theme="dark"] .modal h1,
+[data-bs-theme="dark"] .modal h2,
+[data-bs-theme="dark"] .modal h3 {
+  color: #f1f3f5;
+}
+
+[data-bs-theme="dark"] .modal hr {
+  border-color: #3a3d44;
+  opacity: 1;
+}
+
+[data-bs-theme="dark"] .modal label {
+  color: #c9cdd4;
+  font-weight: 500;
+}
+
+[data-bs-theme="dark"] .modal .form-text {
+  color: #7d8590 !important;
+}
+
+[data-bs-theme="dark"] .modal .form-control {
+  background-color: #141820;
+  color: #f1f3f5;
+  border-color: #3a3d44;
+}
+
+[data-bs-theme="dark"] .modal .form-control::placeholder {
+  color: #6b7280;
+}
+
+[data-bs-theme="dark"] .modal .form-control:focus {
+  background-color: #141820;
+  color: #f1f3f5;
+  border-color: #34d0f7;
+  box-shadow: 0 0 0 3px rgba(52, 208, 247, 0.2);
+}
+
+[data-bs-theme="dark"] .modal .form-control:hover:not(:focus) {
+  border-color: #5a5d65;
+}
+
 /* FABS */
 
 .fab {
@@ -245,11 +294,24 @@
   border-color: #3a3d44;
 }
 
-/* Cabeceras de días (solo en time view para no afectar mes) */
-[data-bs-theme="dark"] .rbc-time-view .rbc-header {
+/* Cabeceras de días — tamaño y legibilidad (claro y oscuro) */
+/* Doble selector para ganar especificidad al CSS de la librería */
+.rbc-calendar .rbc-header,
+.rbc-calendar .rbc-header .rbc-button-link {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: capitalize;
+  padding: 6px 4px;
+}
+
+/* Cabeceras de días en dark (solo en time view para no afectar mes) */
+[data-bs-theme="dark"] .rbc-time-view .rbc-header,
+[data-bs-theme="dark"] .rbc-time-view .rbc-header .rbc-button-link {
   background-color: #252830;
-  color: #c9cdd4;
+  color: #e4e7eb;
   border-color: #3a3d44;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 /* Rejilla de contenido horario */
@@ -295,4 +357,155 @@
 /* Línea de hora actual */
 [data-bs-theme="dark"] .rbc-current-time-indicator {
   background-color: #34d0f7;
+}
+
+/* ============================================================
+   React Big Calendar — Vista mensual (month view)
+   Mejoras UX/UI: jerarquía visual, eventos, grid, accesibilidad
+   ============================================================ */
+
+/* --- Grid: líneas más sutiles en ambos modos --- */
+.rbc-calendar .rbc-month-view {
+  border-color: #dee2e6;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.rbc-calendar .rbc-month-row + .rbc-month-row {
+  border-top-color: #e9ecef;
+}
+
+.rbc-calendar .rbc-day-bg + .rbc-day-bg {
+  border-left-color: #e9ecef;
+}
+
+/* --- Número de día: más presencia --- */
+.rbc-calendar .rbc-date-cell {
+  padding: 6px 8px 2px;
+}
+
+.rbc-calendar .rbc-date-cell .rbc-button-link {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* --- Día actual: círculo destacado --- */
+.rbc-calendar .rbc-date-cell.rbc-now .rbc-button-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  background-color: #0d6efd;
+  color: #fff;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+/* --- Días fuera del mes: muy atenuados --- */
+.rbc-calendar .rbc-off-range .rbc-button-link {
+  opacity: 0.35;
+}
+
+/* --- Hover en celda de día --- */
+.rbc-calendar .rbc-day-bg {
+  transition: background-color 0.12s ease;
+}
+
+.rbc-calendar .rbc-day-bg:hover {
+  background-color: rgba(13, 110, 253, 0.04);
+}
+
+/* --- Eventos en vista mes: más sólidos y legibles --- */
+.rbc-calendar .rbc-month-view .rbc-event {
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.rbc-calendar .rbc-month-view .rbc-event:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* "Ver más" */
+.rbc-calendar .rbc-show-more {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #0d6efd;
+  padding: 1px 6px;
+}
+
+/* Overlay del "ver más" */
+.rbc-calendar .rbc-overlay {
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================================
+   Dark mode — Vista mensual
+   ============================================================ */
+
+[data-bs-theme="dark"] .rbc-calendar .rbc-month-view {
+  border-color: #3a3d44;
+}
+
+[data-bs-theme="dark"] .rbc-calendar .rbc-month-row + .rbc-month-row {
+  border-top-color: #3a3d44;
+}
+
+[data-bs-theme="dark"] .rbc-calendar .rbc-day-bg + .rbc-day-bg {
+  border-left-color: #3a3d44;
+}
+
+/* Fondo base de las celdas */
+[data-bs-theme="dark"] .rbc-calendar .rbc-month-view .rbc-day-bg {
+  background-color: #1e2127;
+}
+
+[data-bs-theme="dark"] .rbc-calendar .rbc-day-bg:hover {
+  background-color: rgba(52, 208, 247, 0.05);
+}
+
+/* Días fuera del mes en dark */
+[data-bs-theme="dark"] .rbc-calendar .rbc-off-range-bg {
+  background-color: #191c21;
+}
+
+/* Número de día en dark */
+[data-bs-theme="dark"] .rbc-calendar .rbc-date-cell .rbc-button-link {
+  color: #c9cdd4;
+}
+
+/* Día actual en dark — teal coherente con eventos */
+[data-bs-theme="dark"] .rbc-calendar .rbc-date-cell.rbc-now .rbc-button-link {
+  background-color: #34d0f7;
+  color: #1e2127;
+}
+
+/* Cabecera de días (Lun, Mar...) en dark — solo month view */
+[data-bs-theme="dark"] .rbc-calendar .rbc-month-header .rbc-header {
+  background-color: #252830;
+  color: #e4e7eb;
+  border-bottom-color: #3a3d44;
+}
+
+/* "Ver más" en dark */
+[data-bs-theme="dark"] .rbc-calendar .rbc-show-more {
+  color: #34d0f7;
+}
+
+/* Overlay en dark */
+[data-bs-theme="dark"] .rbc-calendar .rbc-overlay {
+  background-color: #2c2f36;
+  border-color: #4a4d55;
+  color: #e4e7eb;
+}
+
+[data-bs-theme="dark"] .rbc-calendar .rbc-overlay-header {
+  border-bottom-color: #4a4d55;
 }
