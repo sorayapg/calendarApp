@@ -61,29 +61,93 @@
   height: 50px;
 }
 
-/* === Dark mode — React Big Calendar (toolbar de navegación) === */
+/* === React Big Calendar — toolbar: botones de navegación (claro y oscuro) === */
+
+/* Separación entre los grupos de botones */
+.rbc-toolbar .rbc-btn-group {
+  display: flex;
+  gap: 4px;
+}
+
+.rbc-toolbar .rbc-btn-group + .rbc-btn-group {
+  margin-left: 8px;
+}
+
+/* Estilo base de todos los botones — aplica en claro y oscuro */
+.rbc-toolbar button {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  padding: 7px 16px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  line-height: 1.4;
+  transition: background-color 0.15s ease, color 0.15s ease,
+              border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.rbc-toolbar button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+}
+
+/* Modo claro — botones inactivos */
+.rbc-toolbar button {
+  color: #343a40;
+  background-color: #f1f3f5;
+  border-color: #ced4da;
+}
+
+.rbc-toolbar button:hover {
+  color: #212529;
+  background-color: #e2e6ea;
+  border-color: #b8bfc7;
+}
+
+/* Modo claro — botón de vista activo */
+.rbc-toolbar button.rbc-active {
+  color: #fff;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(13, 110, 253, 0.35);
+}
+
+.rbc-toolbar button.rbc-active:hover {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+}
+
+/* === Dark mode — toolbar === */
 
 [data-bs-theme="dark"] .rbc-toolbar button {
   color: #c9cdd4;
-  border-color: #4a4d55;
   background-color: #2c2f36;
+  border-color: #4a4d55;
 }
 
 [data-bs-theme="dark"] .rbc-toolbar button:hover {
   color: #ffffff;
   background-color: #3a3d44;
-  border-color: #5a5d65;
+  border-color: #6c757d;
+}
+
+[data-bs-theme="dark"] .rbc-toolbar button:focus {
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.35);
 }
 
 [data-bs-theme="dark"] .rbc-toolbar button.rbc-active {
   color: #ffffff;
   background-color: #0d6efd;
   border-color: #0d6efd;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(13, 110, 253, 0.4);
 }
 
 [data-bs-theme="dark"] .rbc-toolbar button.rbc-active:hover {
   background-color: #0b5ed7;
-  border-color: #0b5ed7;
+  border-color: #0a58ca;
 }
 
 /* === Dark mode — React Big Calendar (vista semanal) === */
