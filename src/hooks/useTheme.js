@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react';
-
-const THEME_KEY = 'theme';
+import { applyTheme, getInitialTheme } from '../helpers/theme';
 
 export const useTheme = () => {
     const [isDarkMode, setIsDarkMode] = useState(
-        () => localStorage.getItem(THEME_KEY) === 'dark'
+        () => getInitialTheme() === 'dark'
     );
 
     useEffect(() => {
         const theme = isDarkMode ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-bs-theme', theme);
-        localStorage.setItem(THEME_KEY, theme);
+        applyTheme(theme);
     }, [isDarkMode]);
 
     const toggleTheme = () => setIsDarkMode(prev => !prev);
