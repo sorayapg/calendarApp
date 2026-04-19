@@ -1,6 +1,42 @@
 .login-container{
     margin-top: 15%;
 }
+.login-theme-toggle-wrapper {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    z-index: 1000;
+}
+
+.login-theme-toggle {
+    align-items: center;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 999px;
+    color: #495057;
+    display: inline-flex;
+    gap: 0.5rem;
+    justify-content: center;
+    min-width: 144px;
+    min-height: 42px;
+    padding: 0.45rem 0.9rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.12s ease;
+}
+
+.login-theme-toggle:hover {
+    background-color: #e9ecef;
+    border-color: #adb5bd;
+    color: #212529;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-1px);
+}
+
+.login-theme-toggle:focus-visible {
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.18);
+    outline: none;
+}
+
 .login-form-1{
     border-radius: 5px;
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
@@ -63,4 +99,49 @@
 [data-bs-theme="dark"] .login-form-1 .btnSubmit {
     background-color: #0d6efd;
     color: #fff;
+}
+
+[data-bs-theme="dark"] .login-theme-toggle {
+    background-color: #2c2f36;
+    border-color: #4b5563;
+    color: #e5e7eb;
+}
+
+[data-bs-theme="dark"] .login-theme-toggle:hover {
+    background-color: #3a3d44;
+    border-color: #6b7280;
+    color: #f9fafb;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        margin-top: 22%;
+    }
+
+    .login-theme-toggle-wrapper {
+        right: 16px;
+        top: 16px;
+    }
+
+    .login-theme-toggle {
+        min-height: 44px;
+        min-width: auto;
+        padding: 0.45rem 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        margin-top: 28%;
+    }
+
+    .login-theme-toggle {
+        gap: 0.4rem;
+        padding: 0.45rem 0.75rem;
+    }
+
+    .login-theme-toggle span {
+        font-size: 0.9rem;
+    }
 }
