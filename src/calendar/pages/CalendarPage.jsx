@@ -78,17 +78,22 @@ export const CalendarPage = () => {
   }, []);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(pointer: coarse)');
+    const coarsePointerQuery = window.matchMedia('(pointer: coarse)');
+    const noHoverQuery = window.matchMedia('(hover: none)');
 
     const updateTouchDeviceState = () => {
-      setIsTouchDevice(mediaQuery.matches || navigator.maxTouchPoints > 0);
+      // Solo activamos el modo touch cuando el dispositivo se comporta realmente como móvil/tablet.
+      // En portátiles con pantalla táctil pero uso principal con ratón, mantener onSelectSlot de escritorio.
+      setIsTouchDevice(coarsePointerQuery.matches && noHoverQuery.matches);
     };
 
     updateTouchDeviceState();
-    mediaQuery.addEventListener?.('change', updateTouchDeviceState);
+    coarsePointerQuery.addEventListener?.('change', updateTouchDeviceState);
+    noHoverQuery.addEventListener?.('change', updateTouchDeviceState);
 
     return () => {
-      mediaQuery.removeEventListener?.('change', updateTouchDeviceState);
+      coarsePointerQuery.removeEventListener?.('change', updateTouchDeviceState);
+      noHoverQuery.removeEventListener?.('change', updateTouchDeviceState);
     };
   }, []);
 
