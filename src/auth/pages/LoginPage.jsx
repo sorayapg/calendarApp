@@ -1,6 +1,6 @@
 
 import { useEffect } from 'react';
-import { useAuthStore, useForm } from '../../hooks';
+import { useAuthStore, useForm, useTheme } from '../../hooks';
 import './loginPage.css';
 import Swal from 'sweetalert2';
 
@@ -20,6 +20,7 @@ const registerFormFields = {
 export const LoginPage = () => {
     // usamos el hook useAuthStore para manejar el estado de la autenticación y el error si lo hay
     const { startLogin, errorMessage, startRegister } = useAuthStore();
+    const { isDarkMode, toggleTheme } = useTheme();
 
 
     // usamos el hook useForm para manejar los campos del formulario tanto de login 
@@ -60,6 +61,18 @@ export const LoginPage = () => {
 
     return (
         <div className="container login-container">
+            <div className="login-theme-toggle-wrapper">
+                <button
+                    type="button"
+                    className="btn login-theme-toggle"
+                    onClick={ toggleTheme }
+                    aria-label={ isDarkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro' }
+                >
+                    <i className={ isDarkMode ? 'fas fa-sun' : 'fas fa-moon' }></i>
+                    <span>{ isDarkMode ? 'Modo claro' : 'Modo oscuro' }</span>
+                </button>
+            </div>
+
             <div className="row">
                 <div className="col-md-6 login-form-1">
                     <h3>Ingreso</h3>
