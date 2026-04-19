@@ -61,16 +61,28 @@ export const LoginPage = () => {
 
     return (
         <div className="container login-container">
-            <div className="login-theme-toggle-wrapper">
-                <button
-                    type="button"
-                    className="btn login-theme-toggle"
-                    onClick={ toggleTheme }
-                    aria-label={ isDarkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro' }
-                >
-                    <i className={ isDarkMode ? 'fas fa-sun' : 'fas fa-moon' }></i>
-                    <span>{ isDarkMode ? 'Modo claro' : 'Modo oscuro' }</span>
-                </button>
+            <div className="login-topbar">
+                <div className="login-branding">
+                    <div className="login-branding-badge" aria-hidden="true">
+                        <i className="fas fa-calendar-alt"></i>
+                    </div>
+                    <div className="login-branding-copy">
+                        <span className="login-branding-label">CalendarApp</span>
+                        <small>Organiza tu agenda personal</small>
+                    </div>
+                </div>
+
+                <div className="login-theme-toggle-wrapper">
+                    <button
+                        type="button"
+                        className="btn login-theme-toggle"
+                        onClick={ toggleTheme }
+                        aria-label={ isDarkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro' }
+                    >
+                        <i className={ isDarkMode ? 'fas fa-sun' : 'fas fa-moon' }></i>
+                        <span>{ isDarkMode ? 'Modo claro' : 'Modo oscuro' }</span>
+                    </button>
+                </div>
             </div>
 
             <div className="row">
