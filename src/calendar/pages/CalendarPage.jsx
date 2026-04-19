@@ -1,5 +1,5 @@
 // Importación de hooks de React
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 // Componente principal del calendario de la librería react-big-calendar
 import { Calendar } from 'react-big-calendar';
@@ -7,6 +7,9 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'; // Estilos del calen
 
 // Componentes personalizados del proyecto
 import { CalendarEvent, CalendarModal, CalendarToolbar, FabAddNew, FabDelete, Navbar } from '../';
+import { CalendarTouchDayColumnWrapper } from '../components/CalendarTouchDayColumnWrapper';
+import { CalendarTouchSlotWrapper } from '../components/CalendarTouchSlotWrapper';
+import { createDraftEvent } from '../helpers/createDraftEvent';
 
 // Funciones helper
 import { localizer, getMessagesES } from '../../helpers';
@@ -29,6 +32,7 @@ export const CalendarPage = () => {
 
   // Estado para recordar la última vista del calendario (semana, mes, día, etc.)
   const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'week');
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   // Función que define el estilo de cada evento
   const eventStyleGetter = (event, start, end, isSelected) => {
@@ -57,6 +61,15 @@ export const CalendarPage = () => {
     setActiveEvent(event);
   }
 
+  const openDraftEventModal = useCallback((start) => {
+    setActiveEvent(createDraftEvent({ start, user, view: lastView }));
+    openDateModal();
+  }, [lastView, openDateModal, setActiveEvent, user]);
+
+  const onSelectSlot = ({ start }) => {
+    openDraftEventModal(start);
+  };
+
   // Guarda en localStorage la vista seleccionada y la actualiza en estado
   const onViewChange = (event) => {
     localStorage.setItem('lastView', event);
@@ -67,6 +80,46 @@ export const CalendarPage = () => {
   useEffect(() => {
     starrtLoadingEvents();
   }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(pointer: coarse)');
+
+    const updateTouchDeviceState = () => {
+      setIsTouchDevice(mediaQuery.matches || navigator.maxTouchPoints > 0);
+    };
+
+    updateTouchDeviceState();
+    mediaQuery.addEventListener?.('change', updateTouchDeviceState);
+
+    return () => {
+      mediaQuery.removeEventListener?.('change', updateTouchDeviceState);
+    };
+  }, []);
+
+  const calendarComponents = useMemo(() => {
+    const components = {
+      event: CalendarEvent,
+      toolbar: CalendarToolbar,
+    };
+
+    if (!isTouchDevice) return components;
+
+    return {
+      ...components,
+      dateCellWrapper: (wrapperProps) => (
+        <CalendarTouchSlotWrapper
+          {...wrapperProps}
+          onTapSlot={openDraftEventModal}
+        />
+      ),
+      dayColumnWrapper: (wrapperProps) => (
+        <CalendarTouchDayColumnWrapper
+          {...wrapperProps}
+          onTapSlot={openDraftEventModal}
+        />
+      ),
+    };
+  }, [isTouchDevice, openDraftEventModal]);
 
   return (
     <>
@@ -79,17 +132,17 @@ export const CalendarPage = () => {
         localizer={localizer} // Localizador de fechas
         events={events} // Lista de eventos a mostrar
         defaultView={lastView} // Vista por defecto
+        selectable={isTouchDevice ? false : 'ignoreEvents'} // En touch usamos wrappers propios; en desktop mantenemos la selección nativa de RBC
         startAccessor="start" // Campo que indica la fecha de inicio
         endAccessor="end" // Campo que indica la fecha de fin
         style={{ height: 'calc( 100vh - 80px )' }} // Altura ajustada al viewport
+        longPressThreshold={250} // Mantiene el umbral por defecto cuando la selección nativa está activa
         messages={getMessagesES()} // Traducción de mensajes al español
         eventPropGetter={eventStyleGetter} // Estilo personalizado por evento
-        components={{
-          event: CalendarEvent, // Componente personalizado para mostrar eventos
-          toolbar: CalendarToolbar, // Toolbar personalizado con iconos lucide
-        }}
+        components={calendarComponents}
         onDoubleClickEvent={onDoubleClick} // Doble clic en evento
         onSelectEvent={onSelect} // Selección de evento
+        onSelectSlot={onSelectSlot} // Click/tap en celda o franja para crear un nuevo evento
         onView={onViewChange} // Cambio de vista
       />
 

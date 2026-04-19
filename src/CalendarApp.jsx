@@ -7,7 +7,7 @@ import { store } from './store';
 export const CalendarApp = () => {
   return (
     <Provider store={ store}>
-      <BrowserRouter>
+      <BrowserRouter basename={ import.meta.env.BASE_URL }>
         <AppRouter />
       </BrowserRouter>
     </Provider>

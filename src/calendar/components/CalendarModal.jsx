@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Modal from 'react-modal';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { es } from 'date-fns/locale/es';
@@ -54,7 +53,17 @@ export const CalendarModal = () => {
       overlayClassName="modal-fondo"
       closeTimeoutMS={200}
     >
-      <h1> Nuevo evento </h1>
+      <div className="modal-header-custom">
+        <h1> Nuevo evento </h1>
+        <button
+          type="button"
+          className="modal-close-btn"
+          onClick={onCloseModal}
+          aria-label="Cerrar modal"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
       <hr />
       <form className="container" onSubmit={onSubmit}>
         <div className="form-group mb-2">
@@ -111,10 +120,20 @@ export const CalendarModal = () => {
           <small className="form-text text-muted">Información adicional</small>
         </div>
 
-        <button type="submit" className="btn btn-outline-primary btn-block">
-          <i className="far fa-save"></i>
-          <span> Guardar</span>
-        </button>
+        <div className="modal-actions">
+          <button
+            type="button"
+            className="btn btn-outline-secondary"
+            onClick={onCloseModal}
+          >
+            Cancelar
+          </button>
+
+          <button type="submit" className="btn btn-outline-primary btn-block">
+            <i className="far fa-save"></i>
+            <span> Guardar</span>
+          </button>
+        </div>
       </form>
     </Modal>
   );
