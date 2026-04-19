@@ -39,6 +39,55 @@
   padding: 10px;
 }
 
+.modal-header-custom {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modal-header-custom h1 {
+  margin: 0;
+}
+
+.modal-close-btn {
+  align-items: center;
+  background-color: transparent;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  color: #4b5563;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 1.25rem;
+  height: 36px;
+  justify-content: center;
+  line-height: 1;
+  transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  width: 36px;
+}
+
+.modal-close-btn:hover {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+  color: #111827;
+}
+
+.modal-close-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.modal-actions .btn {
+  min-width: 112px;
+}
+
 /* === Dark mode — Modal de evento === */
 [data-bs-theme="dark"] .modal {
   background: #1e2430;
@@ -86,6 +135,28 @@
 
 [data-bs-theme="dark"] .modal .form-control:hover:not(:focus) {
   border-color: #5a5d65;
+}
+
+[data-bs-theme="dark"] .modal-close-btn {
+  border-color: #4b5563;
+  color: #d1d5db;
+}
+
+[data-bs-theme="dark"] .modal-close-btn:hover {
+  background-color: #111827;
+  border-color: #6b7280;
+  color: #f9fafb;
+}
+
+[data-bs-theme="dark"] .modal-actions .btn-outline-secondary {
+  border-color: #4b5563;
+  color: #d1d5db;
+}
+
+[data-bs-theme="dark"] .modal-actions .btn-outline-secondary:hover {
+  background-color: #111827;
+  border-color: #6b7280;
+  color: #f9fafb;
 }
 
 /* FABS */
@@ -152,28 +223,21 @@
   box-shadow: none;
 }
 
-/* Flechas ‹ › — botón cuadrado, fondo ligeramente distinto */
+/* Flechas ‹ › — dimensiones (aplica en ambos modos) */
 .rbc-nav-arrows button {
   padding: 7px 10px;
   min-width: 38px;
-  background-color: #e9ecef;
-  border-color: #ced4da;
 }
 
-.rbc-nav-arrows button:hover {
-  background-color: #d3d8de;
-  border-color: #adb5bd;
-}
+/* ——— Light mode — toolbar completo ——— */
 
-/* ——— Modo claro ——— */
-
-.rbc-toolbar button {
+[data-bs-theme="light"] .rbc-toolbar button {
   color: #343a40;
   background-color: #f1f3f5;
   border-color: #ced4da;
 }
 
-.rbc-toolbar button:hover {
+[data-bs-theme="light"] .rbc-toolbar button:hover {
   color: #212529;
   background-color: #dee2e6;
   border-color: #adb5bd;
@@ -181,8 +245,28 @@
   transform: translateY(-1px);
 }
 
-/* "Hoy" — outlined azul, más protagonismo visual */
-.rbc-btn-group:first-child button:first-child {
+[data-bs-theme="light"] .rbc-toolbar button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+}
+
+/* Flechas en light — mismo lenguaje visual, borde algo más marcado */
+[data-bs-theme="light"] .rbc-nav-arrows button {
+  background-color: #f1f3f5;
+  border-color: #ced4da;
+  color: #495057;
+}
+
+[data-bs-theme="light"] .rbc-nav-arrows button:hover {
+  background-color: #dee2e6;
+  border-color: #adb5bd;
+  color: #212529;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+/* "Hoy" en light — outlined azul, coherente con el sistema */
+[data-bs-theme="light"] .rbc-btn-group:first-child button:first-child {
   color: #0d6efd;
   background-color: rgba(13, 110, 253, 0.04);
   border-color: #0d6efd;
@@ -190,23 +274,28 @@
   box-shadow: 0 1px 3px rgba(13, 110, 253, 0.12);
 }
 
-.rbc-btn-group:first-child button:first-child:hover {
+[data-bs-theme="light"] .rbc-btn-group:first-child button:first-child:hover {
   color: #fff;
   background-color: #0d6efd;
   border-color: #0d6efd;
   box-shadow: 0 3px 10px rgba(13, 110, 253, 0.35);
+  transform: translateY(-1px);
 }
 
-/* Vista activa — relleno azul sólido */
-.rbc-toolbar button.rbc-active {
+/* Vista activa en light — todos los estados unificados */
+[data-bs-theme="light"] .rbc-toolbar button.rbc-active,
+[data-bs-theme="light"] .rbc-toolbar button.rbc-active:focus,
+[data-bs-theme="light"] .rbc-toolbar button.rbc-active:focus-visible,
+[data-bs-theme="light"] .rbc-toolbar button.rbc-active:active {
   color: #fff;
   background-color: #0d6efd;
   border-color: #0d6efd;
   font-weight: 600;
   box-shadow: 0 2px 8px rgba(13, 110, 253, 0.4);
+  outline: none;
 }
 
-.rbc-toolbar button.rbc-active:hover {
+[data-bs-theme="light"] .rbc-toolbar button.rbc-active:hover {
   background-color: #0b5ed7;
   border-color: #0a58ca;
   box-shadow: 0 4px 12px rgba(13, 110, 253, 0.45);
@@ -447,6 +536,43 @@
 }
 
 /* ============================================================
+   Light mode — Vista mensual (mejoras de contraste y jerarquía)
+   Aislado con [data-bs-theme="light"] para no afectar dark mode
+   ============================================================ */
+
+/* Fondo base de celdas del mes — blanco limpio */
+[data-bs-theme="light"] .rbc-calendar .rbc-month-view .rbc-day-bg {
+  background-color: #ffffff;
+}
+
+/* Días fuera del mes — fondo más diferenciado y texto atenuado */
+[data-bs-theme="light"] .rbc-calendar .rbc-off-range-bg {
+  background-color: #f3f4f6;
+}
+
+[data-bs-theme="light"] .rbc-calendar .rbc-off-range .rbc-button-link {
+  color: #9ca3af;
+  opacity: 1; /* resetear el 0.35 global, preferimos color explícito */
+}
+
+/* Número de día — color sólido y legible */
+[data-bs-theme="light"] .rbc-calendar .rbc-date-cell .rbc-button-link {
+  color: #374151;
+}
+
+/* Cabecera de días (Lun, Mar...) en light */
+[data-bs-theme="light"] .rbc-calendar .rbc-month-header .rbc-header {
+  background-color: #f8f9fa;
+  color: #495057;
+  border-bottom-color: #dee2e6;
+}
+
+/* Hover en celda — luz azul más perceptible */
+[data-bs-theme="light"] .rbc-calendar .rbc-day-bg:hover {
+  background-color: rgba(13, 110, 253, 0.05);
+}
+
+/* ============================================================
    Dark mode — Vista mensual
    ============================================================ */
 
@@ -508,4 +634,21 @@
 
 [data-bs-theme="dark"] .rbc-calendar .rbc-overlay-header {
   border-bottom-color: #4a4d55;
+}
+
+@media (pointer: coarse) {
+  .rbc-month-view .rbc-day-bg {
+    touch-action: manipulation;
+  }
+
+  .rbc-time-view .rbc-time-content,
+  .rbc-time-view .rbc-time-column,
+  .rbc-time-view .rbc-time-slot {
+    touch-action: pan-y;
+  }
+
+  .modal {
+    max-height: calc(100vh - 32px);
+    width: min(500px, calc(100vw - 24px));
+  }
 }
