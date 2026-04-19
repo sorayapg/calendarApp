@@ -126,7 +126,7 @@ export const CalendarModal = () => {
             className="btn modal-cancel-btn"
             onClick={onCloseModal}
           >
-            <i className="fa-solid fa-xmark" aria-hidden="true"></i>
+            <i className="fa-regular fa-circle-xmark" aria-hidden="true"></i>
             Cancelar
           </button>
 

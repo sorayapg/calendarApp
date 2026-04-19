@@ -51,14 +51,10 @@ export const CalendarPage = () => {
     }
   }
 
-  // Abre el modal al hacer doble clic sobre un evento
-  const onDoubleClick = (event) => {
-    openDateModal();
-  }
-
-  // Marca el evento seleccionado como activo
+  // Selecciona un evento existente y abre el modal de edición con un solo click/tap
   const onSelect = (event) => {
     setActiveEvent(event);
+    openDateModal();
   }
 
   const openDraftEventModal = useCallback((start) => {
@@ -140,8 +136,7 @@ export const CalendarPage = () => {
         messages={getMessagesES()} // Traducción de mensajes al español
         eventPropGetter={eventStyleGetter} // Estilo personalizado por evento
         components={calendarComponents}
-        onDoubleClickEvent={onDoubleClick} // Doble clic en evento
-        onSelectEvent={onSelect} // Selección de evento
+        onSelectEvent={onSelect} // Click/tap en evento existente para editar
         onSelectSlot={onSelectSlot} // Click/tap en celda o franja para crear un nuevo evento
         onView={onViewChange} // Cambio de vista
       />
