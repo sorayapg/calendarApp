@@ -67,14 +67,15 @@
 }
 
 .modal-close-btn:hover {
-  background-color: #f3f4f6;
-  border-color: #9ca3af;
-  color: #111827;
+  background-color: #fef2f2;
+  border-color: #f87171;
+  color: #dc2626;
 }
 
 .modal-close-btn:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2);
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.18);
 }
 
 .modal-actions {
@@ -85,7 +86,41 @@
 }
 
 .modal-actions .btn {
+  align-items: center;
+  display: inline-flex;
+  gap: 8px;
+  justify-content: center;
+  min-height: 44px;
   min-width: 112px;
+}
+
+.modal-cancel-btn {
+  background-color: transparent;
+  border: 1px solid #ef4444;
+  color: #dc2626;
+}
+
+.modal-cancel-btn:hover {
+  background-color: #fef2f2;
+  border-color: #dc2626;
+  color: #b91c1c;
+}
+
+.modal-cancel-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.18);
+}
+
+.modal-save-btn {
+  box-shadow: 0 2px 6px rgba(13, 110, 253, 0.22);
+}
+
+.modal-save-btn:hover {
+  box-shadow: 0 4px 10px rgba(13, 110, 253, 0.28);
+}
+
+.modal-save-btn:focus-visible {
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.18);
 }
 
 /* === Dark mode — Modal de evento === */
@@ -143,20 +178,29 @@
 }
 
 [data-bs-theme="dark"] .modal-close-btn:hover {
-  background-color: #111827;
-  border-color: #6b7280;
-  color: #f9fafb;
+  background-color: rgba(239, 68, 68, 0.12);
+  border-color: #f87171;
+  color: #fca5a5;
 }
 
-[data-bs-theme="dark"] .modal-actions .btn-outline-secondary {
-  border-color: #4b5563;
-  color: #d1d5db;
+[data-bs-theme="dark"] .modal-close-btn:focus-visible {
+  border-color: #f87171;
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.18);
 }
 
-[data-bs-theme="dark"] .modal-actions .btn-outline-secondary:hover {
-  background-color: #111827;
-  border-color: #6b7280;
-  color: #f9fafb;
+[data-bs-theme="dark"] .modal-cancel-btn {
+  border-color: #f87171;
+  color: #fca5a5;
+}
+
+[data-bs-theme="dark"] .modal-cancel-btn:hover {
+  background-color: rgba(239, 68, 68, 0.12);
+  border-color: #ef4444;
+  color: #fecaca;
+}
+
+[data-bs-theme="dark"] .modal-cancel-btn:focus-visible {
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.18);
 }
 
 /* FABS */

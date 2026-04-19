@@ -61,7 +61,7 @@ export const CalendarModal = () => {
           onClick={onCloseModal}
           aria-label="Cerrar modal"
         >
-          <span aria-hidden="true">×</span>
+          <i className="fa-solid fa-xmark" aria-hidden="true"></i>
         </button>
       </div>
       <hr />
@@ -123,13 +123,14 @@ export const CalendarModal = () => {
         <div className="modal-actions">
           <button
             type="button"
-            className="btn btn-outline-secondary"
+            className="btn modal-cancel-btn"
             onClick={onCloseModal}
           >
+            <i className="fa-solid fa-xmark" aria-hidden="true"></i>
             Cancelar
           </button>
 
-          <button type="submit" className="btn btn-outline-primary btn-block">
+          <button type="submit" className="btn btn-primary modal-save-btn">
             <i className="far fa-save"></i>
             <span> Guardar</span>
           </button>
