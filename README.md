@@ -256,7 +256,7 @@ Aplicación en ejecución:
 ## 11. Documentación de uso
 
 La guía de uso está disponible en:
-GUIA_USUARIO.md
+[GUIA_USUARIO.md](./GUIA_USUARIO.md)
 
 ## 12. Autor
 
