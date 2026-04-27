@@ -1,5 +1,6 @@
 // Importación de hooks de React
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import Swal from 'sweetalert2';
 
 // Componente principal del calendario de la librería react-big-calendar
 import { Calendar } from 'react-big-calendar';
@@ -10,6 +11,7 @@ import { CalendarEvent, CalendarModal, CalendarToolbar, FabAddNew, FabDelete, Na
 import { CalendarTouchDayColumnWrapper } from '../components/CalendarTouchDayColumnWrapper';
 import { CalendarTouchSlotWrapper } from '../components/CalendarTouchSlotWrapper';
 import { createDraftEvent } from '../helpers/createDraftEvent';
+import { isPastDate } from '../helpers/isPastDate';
 
 // Funciones helper
 import { localizer, getMessagesES } from '../../helpers';
@@ -33,6 +35,18 @@ export const CalendarPage = () => {
   // Estado para recordar la última vista del calendario (semana, mes, día, etc.)
   const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'week');
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  const showPastDateMessage = useCallback(() => {
+    Swal.fire({
+      toast: true,
+      position: 'top',
+      timer: 2200,
+      timerProgressBar: true,
+      showConfirmButton: false,
+      icon: 'info',
+      title: 'No puedes crear eventos en fechas pasadas',
+    });
+  }, []);
 
   // Función que define el estilo de cada evento
   const eventStyleGetter = (event, start, end, isSelected) => {
@@ -58,9 +72,14 @@ export const CalendarPage = () => {
   }
 
   const openDraftEventModal = useCallback((start) => {
+    if (isPastDate(start)) {
+      showPastDateMessage();
+      return;
+    }
+
     setActiveEvent(createDraftEvent({ start, user, view: lastView }));
     openDateModal();
-  }, [lastView, openDateModal, setActiveEvent, user]);
+  }, [lastView, openDateModal, setActiveEvent, showPastDateMessage, user]);
 
   const onSelectSlot = ({ start }) => {
     openDraftEventModal(start);
