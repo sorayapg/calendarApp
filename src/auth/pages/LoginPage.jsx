@@ -60,7 +60,7 @@ export const LoginPage = () => {
 
 
     return (
-        <div className="container login-container">
+        <div className="login-container">
             <div className="login-topbar">
                 <div className="login-theme-toggle-wrapper">
                     <button
