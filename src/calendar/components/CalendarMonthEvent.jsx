@@ -29,18 +29,16 @@ const getMonthEventTimeRange = (event) => {
     return format(start, 'HH:mm');
   }
 
-  return `${format(start, 'HH:mm')} – ${format(end, 'HH:mm')}`;
+  return `${format(start, 'HH:mm')}–${format(end, 'HH:mm')}`;
 };
 
 export const CalendarMonthEvent = ({ event }) => {
   const timeRange = getMonthEventTimeRange(event);
-  const authorSuffix = event?.user?.name ? ` - ${event.user.name}` : '';
 
   return (
     <span>
-      {timeRange ? `${timeRange} ` : ''}
+      {timeRange ? `${timeRange} · ` : ''}
       <strong>{event?.title}</strong>
-      {authorSuffix}
     </span>
   );
 };
