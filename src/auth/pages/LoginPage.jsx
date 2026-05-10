@@ -1,5 +1,4 @@
-
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuthStore, useForm, useTheme } from '../../hooks';
 import './loginPage.css';
 import Swal from 'sweetalert2';
@@ -21,6 +20,7 @@ export const LoginPage = () => {
     // usamos el hook useAuthStore para manejar el estado de la autenticación y el error si lo hay
     const { startLogin, errorMessage, startRegister } = useAuthStore();
     const { isDarkMode, toggleTheme } = useTheme();
+    const [isRegisterMode, setIsRegisterMode] = useState(false);
 
 
     // usamos el hook useForm para manejar los campos del formulario tanto de login 
@@ -62,16 +62,6 @@ export const LoginPage = () => {
     return (
         <div className="container login-container">
             <div className="login-topbar">
-                <div className="login-branding">
-                    <div className="login-branding-badge" aria-hidden="true">
-                        <i className="fas fa-calendar-alt"></i>
-                    </div>
-                    <div className="login-branding-copy">
-                        <span className="login-branding-label">CalendarApp</span>
-                        <small>Organiza tu agenda personal</small>
-                    </div>
-                </div>
-
                 <div className="login-theme-toggle-wrapper">
                     <button
                         type="button"
@@ -85,92 +75,118 @@ export const LoginPage = () => {
                 </div>
             </div>
 
-            <div className="row">
-                <div className="col-md-6 login-form-1">
-                    <h3>Ingreso</h3>
-                    <form onSubmit={ loginSubmit}>
-                        <div className="form-group mb-2">
-                            <input 
-                                type="text"
-                                className="form-control"
-                                placeholder="Correo"
-                                name="loginEmail"
-                                value={ loginEmail }
-                                onChange={ onLoginInputChange}
-                            />
-                        </div>
-                        <div className="form-group mb-2">
-                            <input
-                                type="password"
-                                className="form-control"
-                                placeholder="Contraseña"
-                                name="loginPassword"
-                                value={ loginPassword }
-                                onChange={ onLoginInputChange}
-                            />
-                        </div>
-                        <div className="d-grid gap-2">
-                            <input 
-                                type="submit"
-                                className="btnSubmit"
-                                value="Login" 
-                            />
-                        </div>
-                    </form>
+            <div className="auth-shell">
+                <div className="login-branding login-branding-centered">
+                    <div className="login-branding-badge" aria-hidden="true">
+                        <i className="fas fa-calendar-alt"></i>
+                    </div>
+                    <div className="login-branding-copy">
+                        <span className="login-branding-label">CalendarApp</span>
+                        <small>Organiza tu agenda personal</small>
+                    </div>
                 </div>
 
-                <div className="col-md-6 login-form-2">
-                    <h3>Registro</h3>
-                    <form onSubmit={ registerSubmit}>
-                        <div className="form-group mb-2">
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Nombre"
-                                name="registerName"
-                                value={ registerName }
-                                onChange={ onRegisterInputChange}
-                            />
-                        </div>
-                        <div className="form-group mb-2">
-                            <input
-                                type="email"
-                                className="form-control"
-                                placeholder="Correo"
-                                name="registerEmail"
-                                value={ registerEmail }
-                                onChange={ onRegisterInputChange}
-                            />
-                        </div>
-                        <div className="form-group mb-2">
-                            <input
-                                type="password"
-                                className="form-control"
-                                placeholder="Contraseña" 
-                                name="registerPassword"
-                                value={ registerPassword}
-                                onChange={ onRegisterInputChange}
-                            />
-                        </div>
+                <div className={ `auth-card ${ isRegisterMode ? 'auth-card-register' : 'auth-card-login' }` }>
+                    <div className="auth-card-header">
+                        <h3>{ isRegisterMode ? 'Registro' : 'Ingreso' }</h3>
+                        <p>{ isRegisterMode ? 'Crea tu cuenta para empezar a organizar tus eventos.' : 'Accede a tu agenda y continúa donde lo dejaste.' }</p>
+                    </div>
 
-                        <div className="form-group mb-2">
-                            <input
-                                type="password"
-                                className="form-control"
-                                placeholder="Repita la contraseña" 
-                                name="registerPassword2"
-                                value={ registerPassword2}
-                                onChange={ onRegisterInputChange}
-                            />
-                        </div>
+                    {
+                        !isRegisterMode ? (
+                            <form onSubmit={ loginSubmit } className="auth-form">
+                                <div className="form-group mb-2">
+                                    <input 
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Correo"
+                                        name="loginEmail"
+                                        value={ loginEmail }
+                                        onChange={ onLoginInputChange}
+                                    />
+                                </div>
+                                <div className="form-group mb-2">
+                                    <input
+                                        type="password"
+                                        className="form-control"
+                                        placeholder="Contraseña"
+                                        name="loginPassword"
+                                        value={ loginPassword }
+                                        onChange={ onLoginInputChange}
+                                    />
+                                </div>
+                                <div className="d-grid gap-2">
+                                    <input 
+                                        type="submit"
+                                        className="btnSubmit"
+                                        value="Login" 
+                                    />
+                                </div>
+                            </form>
+                        ) : (
+                            <form onSubmit={ registerSubmit } className="auth-form">
+                                <div className="form-group mb-2">
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Nombre"
+                                        name="registerName"
+                                        value={ registerName }
+                                        onChange={ onRegisterInputChange}
+                                    />
+                                </div>
+                                <div className="form-group mb-2">
+                                    <input
+                                        type="email"
+                                        className="form-control"
+                                        placeholder="Correo"
+                                        name="registerEmail"
+                                        value={ registerEmail }
+                                        onChange={ onRegisterInputChange}
+                                    />
+                                </div>
+                                <div className="form-group mb-2">
+                                    <input
+                                        type="password"
+                                        className="form-control"
+                                        placeholder="Contraseña" 
+                                        name="registerPassword"
+                                        value={ registerPassword}
+                                        onChange={ onRegisterInputChange}
+                                    />
+                                </div>
 
-                        <div className="d-grid gap-2">
-                            <input 
-                                type="submit" 
-                                className="btnSubmit" 
-                                value="Crear cuenta" />
-                        </div>
-                    </form>
+                                <div className="form-group mb-2">
+                                    <input
+                                        type="password"
+                                        className="form-control"
+                                        placeholder="Repita la contraseña" 
+                                        name="registerPassword2"
+                                        value={ registerPassword2}
+                                        onChange={ onRegisterInputChange}
+                                    />
+                                </div>
+
+                                <div className="d-grid gap-2">
+                                    <input 
+                                        type="submit" 
+                                        className="btnSubmit" 
+                                        value="Crear cuenta" />
+                                </div>
+                            </form>
+                        )
+                    }
+
+                    <div className="auth-switch">
+                        <span>{ isRegisterMode ? '¿Ya tienes cuenta?' : '¿No tienes cuenta?' }</span>
+                        <button
+                            type="button"
+                            className="auth-switch-btn"
+                            onClick={ () => setIsRegisterMode(prev => !prev) }
+                        >
+                            { isRegisterMode ? 'Inicia sesión' : 'Regístrate' }
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
