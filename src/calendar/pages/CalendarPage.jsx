@@ -7,7 +7,7 @@ import { Calendar } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css'; // Estilos del calendario
 
 // Componentes personalizados del proyecto
-import { CalendarEvent, CalendarModal, CalendarToolbar, FabAddNew, FabDelete, Navbar } from '../';
+import { CalendarEvent, CalendarModal, CalendarMonthEvent, CalendarToolbar, FabAddNew, FabDelete, Navbar } from '../';
 import { CalendarTouchDayColumnWrapper } from '../components/CalendarTouchDayColumnWrapper';
 import { CalendarTouchSlotWrapper } from '../components/CalendarTouchSlotWrapper';
 import { createDraftEvent } from '../helpers/createDraftEvent';
@@ -120,6 +120,9 @@ export const CalendarPage = () => {
     const components = {
       event: CalendarEvent,
       toolbar: CalendarToolbar,
+      month: {
+        event: CalendarMonthEvent,
+      },
     };
 
     if (!isTouchDevice) return components;

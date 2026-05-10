@@ -1,4 +1,5 @@
 export * from './components/CalendarEvent';
+export * from './components/CalendarMonthEvent';
 export * from './components/CalendarModal';
 export * from './components/CalendarToolbar';
 export * from './components/FabAddNew';
