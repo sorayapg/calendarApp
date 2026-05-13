@@ -40,8 +40,9 @@ export const useAuthStore = () => {
         localStorage.setItem('token-init-date', new Date().getTime());
 
         dispatch(onLogin({
+            id: data.id ?? data.uid,
             name: data.name,
-            uid: data.uid
+            uid: data.uid ?? data.id
         }));
 
     } catch (error) {
@@ -82,7 +83,11 @@ export const useAuthStore = () => {
 
 
             // Autenticamos al nuevo usuario
-            dispatch(onLogin({ name: data.name, uid: data.uid }));
+            dispatch(onLogin({
+                id: data.id ?? data.uid,
+                name: data.name,
+                uid: data.uid ?? data.id,
+            }));
 
         } catch (error) {
             // Manejo detallado del error
@@ -123,7 +128,11 @@ export const useAuthStore = () => {
             localStorage.setItem('token-init-date', new Date().getTime());
 
             // Autenticamos al nuevo usuario
-            dispatch(onLogin({ name: data.name, uid: data.uid }));
+            dispatch(onLogin({
+                id: data.id ?? data.uid,
+                name: data.name,
+                uid: data.uid ?? data.id,
+            }));
             console.log({data});
         } catch (error) {
             // Si todo falla, hacemos una limpieza en el localStorage y limpiamos el estado de autenticación
