@@ -17,7 +17,7 @@ export const createDraftEvent = ({ start = new Date(), user = {}, view = 'week' 
     end: eventEnd,
     bgColor: '#fafafa',
     user: {
-      _id: user?.uid || user?._id || '',
+      id: user?.id ?? user?.uid ?? user?._id ?? '',
       name: user?.name || '',
     },
   };
