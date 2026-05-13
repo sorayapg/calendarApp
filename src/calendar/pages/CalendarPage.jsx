@@ -51,7 +51,9 @@ export const CalendarPage = () => {
   // Función que define el estilo de cada evento
   const eventStyleGetter = (event, start, end, isSelected) => {
     // Comprueba si el evento es del usuario autenticado
-    const isMyEvent = (user.uid === event.user._id) || (user.uid === event.user.uid);
+    const currentUserId = user?.id ?? user?.uid ?? user?._id;
+    const eventOwnerId = event?.user?.id ?? event?.user?._id ?? event?.user?.uid;
+    const isMyEvent = currentUserId === eventOwnerId;
 
     const style = {
       backgroundColor: isMyEvent ? '#34d0f7' : '#465660', // Azul si es tuyo, gris si es de otro
