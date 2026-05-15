@@ -42,6 +42,14 @@ El frontend está orientado a una experiencia responsive y mantiene comportamien
 - Bootstrap 5.3.5 (CDN)  
 - Font Awesome 6.7.2 (CDN)  
 
+### Integración backend actual
+
+- API REST externa desacoplada del frontend  
+- Backend desplegado en Render  
+- PostgreSQL como base de datos  
+- Prisma ORM  
+- Neon Database  
+
 ![React](https://img.shields.io/badge/React-18-blue)
 ![Vite](https://img.shields.io/badge/Vite-5-purple)
 ![Status](https://img.shields.io/badge/status-completed-green)
@@ -51,9 +59,9 @@ El frontend está orientado a una experiencia responsive y mantiene comportamien
 ## 🔗 Repositorios del proyecto
 
 - Frontend: https://github.com/sorayapg/calendarApp  
-- Backend: (añadir aquí el repositorio backend)
+- Backend: repositorio independiente desplegado en Render
 
-> Para que el frontend funcione correctamente, es necesario tener el backend en ejecución.
+> El frontend está desplegado en GitHub Pages y consume el backend mediante `VITE_API_URL`. El backend ya no sirve HTML ni frontend legacy: expone únicamente una API REST.
 
 ---
 
@@ -103,6 +111,12 @@ npm run dev
 npm run build
 ```
 
+### Deploy a GitHub Pages
+
+```bash
+npm run deploy
+```
+
 ### Previsualización del build
 
 ```bash
@@ -127,12 +141,21 @@ VITE_API_URL=https://calendarapp-backend-fes0.onrender.com/api
 ### Notas: 
 
 - .env.template está en la raíz del proyecto
+- `.env` está pensado para desarrollo local
+- `.env.production` apunta al backend desplegado en Render
 - src/api/calendarApi.js usa esta variable como baseURL
 - el token de sesión se envía automáticamente en el header x-token
 
 ## 6. Conexión con backend
 La conexión se realiza mediante Axios desde:
 src/api/calendarApi.js
+
+Arquitectura actual:
+
+- frontend desplegado en GitHub Pages
+- backend desplegado en Render
+- comunicación mediante API REST externa usando `VITE_API_URL`
+- backend basado en PostgreSQL + Prisma ORM + Neon Database
 
 Endpoints utilizados:
 
@@ -182,7 +205,7 @@ src/
     useCalendarStore.js
     useForm.js
     useTheme.js
-    useUiStore.js
+    useUiStrore.js
   router/
     AppRouter.jsx
   store/
@@ -246,19 +269,27 @@ Aplicación en ejecución:
 - sin tests activos en script
 - Bootstrap y FontAwesome por CDN
 
-## 10. Posibles mejoras futuras
+## 10. Compatibilidad tras la migración del backend
+
+- El frontend fue adaptado para trabajar con un backend desacoplado basado en PostgreSQL + Prisma + Neon.
+- La comunicación sigue realizándose por API REST mediante `VITE_API_URL`.
+- Se empezó a normalizar el uso de `id` como identificador principal en frontend.
+- Se mantiene compatibilidad temporal con `uid` y `_id` en algunos puntos para evitar regresiones durante la transición.
+- Los ajustes se han hecho de forma incremental para no romper autenticación, CRUD de eventos ni despliegue en producción.
+
+## 11. Posibles mejoras futuras
 - tests de frontend
 - mejora del modal (modo creación/edición)
 - confirmación al eliminar
 - mejora SEO y metadatos
 - fallback para SPA en hosting estático
 
-## 11. Documentación de uso
+## 12. Documentación de uso
 
 La guía de uso está disponible en:
 [GUIA_USUARIO.md](./GUIA_USUARIO.md)
 
-## 12. Autor
+## 13. Autor
 
 👩‍💻 Soraya P.G.
 Frontend Developer & UX
