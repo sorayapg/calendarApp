@@ -5,6 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import { useCalendarForm } from '../hooks/useCalendar';
 import { useUiStore } from '../../hooks/useUiStrore';
+import { useCalendarStore } from '../../hooks';
 
 
 registerLocale('es', es);
@@ -20,7 +21,8 @@ Modal.setAppElement("#root");
 
 export const CalendarModal = () => {
   const { isDateModalOpen, closeDateModal } = useUiStore();
- 
+  const { hasExistingEventSelected } = useCalendarStore();
+
   const {
     formValues,
     titleClass,
@@ -54,7 +56,7 @@ export const CalendarModal = () => {
       closeTimeoutMS={200}
     >
       <div className="modal-header-custom">
-        <h1> Nuevo evento </h1>
+        <h1>{ hasExistingEventSelected ? 'Editar evento' : 'Nuevo evento' }</h1>
         <button
           type="button"
           className="modal-close-btn"
