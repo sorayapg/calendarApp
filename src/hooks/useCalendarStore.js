@@ -90,6 +90,7 @@ export const useCalendarStore = () => {
         activeEvent,
         events,
         hasEventSelected: !!activeEvent, // Booleano si hay evento activo
+        hasExistingEventSelected: !!(activeEvent?.id), // Solo true si el evento ya está persistido en backend
 
         //* Métodos
         setActiveEvent,
