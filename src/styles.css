@@ -723,3 +723,14 @@
     width: min(500px, calc(100vw - 24px));
   }
 }
+
+/* Notas del evento en vista Semana/Día */
+.cal-event-notes {
+  display: block;
+  font-size: 0.72em;
+  opacity: 0.85;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 1px;
+}
